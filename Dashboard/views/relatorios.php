@@ -75,29 +75,31 @@
             <div class="main-content bg-report">
                 <div class="panel-row">
                     <div class="panel panel-50">
-                        <form>
+                        <form action="../exportXls.php" method="POST">
                             <div class="form-group">
                                 <label for="reportTitle">Título do Relatório</label>
-                                <input type="text" class="form-control" id="reportTitle"
-                                    placeholder="Ex: 'Relatorio da Lavoura de Café'">
+                                <input type="text" name="reportTitle" class="form-control" id="reportTitle"
+                                    placeholder="Ex: 'Relatorio da Lavoura de Café'" required>
                             </div>
+                            <!--
                             <div class="form-group">
                                 <label for="type">Formato de Arquivo</label>
                                 <select class="custom-select custom-select-sm">
                                     <option selected>Escolha um formato...</option>
                                     <option value="1">.pdf</option>
                                     <option value="2">.scv</option>
-                                    <option value="3">.xml</option>
+                                    <option value="3">.xls</option>
                                 </select>
                             </div>
+                            -->
                             <div class="row">
                                 <div class="col-6">
                                     <label for="start">Desde</label>
-                                    <input type="date" class="form-control" id="start">
+                                    <input type="date" name="start" class="form-control" id="start">
                                 </div>
                                 <div class="col-6">
                                     <label for="end">Até</label>
-                                    <input type="date" class="form-control" id="end">
+                                    <input type="date" name="end" class="form-control" id="end">
                                 </div>
                             </div>
                             

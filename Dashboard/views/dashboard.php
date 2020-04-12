@@ -19,6 +19,20 @@
     //Dados Sensor
     //TODO rever essas pesquisas
     date_default_timezone_set('America/Sao_Paulo');
+    $listaSensor = array();
+    $listaData = array();
+    $i = 0;
+    $sqlGrafico = "SELECT * FROM sensor";
+    $resultadoGrafico = mysqli_query($conexao, $sqlGrafico);
+    while($row = mysqli_fetch_object($resultadoGrafico)) {
+        $mpx = $row->mpx;
+        $data_hora = $row->data_hora;
+        $data_hora_formatada = date("H", strtotime($data_hora));
+        $listaSensor[$i] = $mpx;
+        $listaData[$i] = $data_hora_formatada;
+        $i = $i + 1;
+    }
+
     if(isset($_POST['pesquisar'])):
         $dataPesquisa = mysqli_escape_string($conexao, $_POST['data']);
         $dataArray = explode("-", $dataPesquisa);
@@ -107,7 +121,7 @@
             <div class="main-content bg-dashboard">
                 <div class="panel-row">
                     <div class="panel panel-50" id="grafico">
-                       <!-- <canvas class="line=chart" id="myChart"></canvas> -->
+                       <!-- <canvas class="line=chart" id="myChart"></canvas> 
                        <form action="" method="post">
                             <div class="form-group">
                                 <label for="data">Filtrar registros por mês</label>
@@ -130,13 +144,15 @@
                             
                             <button type="submit" name="intervalo" class="btn btn-primary">Buscar</button>
                        </form>
-
+                       -->
+                        <h1>Registros de Pressão</h1>
+                        <div id="chart_div" style="width: 100%; height: 500px;"></div>
                        <table class="table table-hover">
                         <thead>
                             <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Pressão</th>
-                            <th scope="col">Data</th>
+                            <th scope="col">Data e Hora</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -147,7 +163,7 @@
                                 echo $dadosSensor['id'];
                                 echo '</th><td>';
                                 echo $dadosSensor['mpx'];
-                                echo '</td><td>';
+                                echo 'kPa</td><td>';
                                 echo $dadosSensor['data_hora'];
                                 echo '</td></tr>';
                             endwhile;
@@ -172,6 +188,34 @@
 
     <!--Import custom chart.js-->
     <script src="../js/charts.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['hora', 'Pressão'],
+          <?php
+            $k = $i;
+            for($i = (count($listaSensor) - 7); $i < count($listaSensor); $i++){
+            ?>
+          ['<?php echo $listaData[$i] ?>h',  <?php echo $listaSensor[$i] ?>],
+            <?php } ?>
+        ]);
+
+        var options = {
+          title: '',
+          hAxis: {title: 'Tempo',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0},
+          backgroundColor: { fill:'transparent' }
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
 
 </body>
 
