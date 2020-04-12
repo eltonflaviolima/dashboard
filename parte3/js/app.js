@@ -9,28 +9,27 @@ $('document').ready(function () {
             var sensorarray = [];
             var dataarray = [];
 
-            for (var i = 0; i < data.length; i++) {
+            for (var i in data) {
                 sensorarray.push(data[i].sensorPressao);
-                dataarray.push(data[i].data);
             }
 
-            grafico(sensorarray, dataarray);
+            grafico(sensorarray);
 
         }
     });
 })
 
-function grafico(sensor, data) {
+function grafico (sensorarray) {
     var ctx = document.getElementById('myChart').getContext('2d');
     //TODO adicionar grafico dinâmico
     //https://www.youtube.com/watch?v=De-zusP8QVM
     var chartGraf = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: sensor,
+            labels: ['1h','2h'],
             datasets: [{
                 label: false,
-                data: data,
+                data: [1,2],
                 borderWidth: 4,
                 borderColor: 'rgba(198, 93, 55, 0.815)',
                 backgroundColor: 'rgba(198, 93, 55, 0.2)',

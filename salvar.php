@@ -1,6 +1,6 @@
 <?php
 
-    include('conection.php');
+    include('conexao.php');
 
     $sensorPressao = $_GET['sensorPressao'];
 

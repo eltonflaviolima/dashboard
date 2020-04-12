@@ -45,7 +45,7 @@ void loop() {
   sensorPressao += 2;
   //=======================================================================================
 
-  Serial.print("connecting to ");
+  Serial.print("Conectando com: ");
   Serial.print(host);
 
   // Use WiFiClient class to create TCP connections
@@ -53,7 +53,7 @@ void loop() {
 
   const int httpPort = 80;
   if (!client.connect(host, httpPort)) {
-    Serial.println("connection failed");
+    Serial.println("A conexao falhou!");
     delay(5000);
     return;
   }

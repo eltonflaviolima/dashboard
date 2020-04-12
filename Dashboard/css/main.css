@@ -48,7 +48,8 @@ main .main-content panel {
 }
 
 .panel-50 {
-    width: 100%;
+    width: 80%;
+    margin-bottom: 20px;
 }
 
 .panel-config {
@@ -89,3 +90,4 @@ main .main-content panel {
     color: #fff;
     margin-top: 30px;
 }
+
