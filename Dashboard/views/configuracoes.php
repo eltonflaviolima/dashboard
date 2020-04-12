@@ -59,6 +59,10 @@
                         <i class="fas fa-cog"></i>
                         <a href="configuracoes.php"></i>CONFIGURAÇÕES</a>
                     </li>
+                    <li class="sidebar-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <a href="../logout.php"></i>Logout </a>
+                    </li>
                 </ul>
             </div>
         </sidebar>
