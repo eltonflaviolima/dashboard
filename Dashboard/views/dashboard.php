@@ -88,7 +88,7 @@
         <sidebar id="sidebar">
             <div class="sidebar-title">
                 <img src="../images/logo-tech-tensiometro.png" alt="" id="iconMenu" onclick="responsiveSidebar()">
-                <h2>Tensiômetro</h2>
+                <h2>Tensiômetro teste</h2>
             </div>
             <div class="menu">
                 <ul>
