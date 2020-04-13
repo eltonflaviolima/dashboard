@@ -61,20 +61,30 @@
                     </li>
                     <li class="sidebar-logout">
                         <i class="fas fa-sign-out-alt"></i>
-                        <a href="../logout.php"></i>Logout </a>
+                        <a href="../logout.php"></i>LOGOUT </a>
                     </li>
                 </ul>
             </div>
         </sidebar>
         <main>
             <header>
-                <a href="dashboard.php"><i class="fas fa-chart-line"></i> Dashboard</a>
+                <!-- Criar função para esconder sidebar -->
+                <i id="iconMenu" onclick="responsiveSidebar()" class="fas fa-bars"></i>
                 <a> Bem vindo <?php echo $dados['nome']; ?>!</a>
                 <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </header>
             <div class="main-content bg-report">
                 <div class="panel-row">
                     <div class="panel panel-50">
+                    <div class="form-group">
+                                <label for="type">Formato de Arquivo</label>
+                                <select class="custom-select custom-select-sm">
+                                    <option selected>Escolha um formato...</option>
+                                    <option value="1">.pdf</option>
+                                    <option value="2">.scv</option>
+                                    <option value="3">.xls</option>
+                                </select>
+                            </div>
                         <form action="../exportXls.php" method="POST">
                             <div class="form-group">
                                 <label for="reportTitle">Título do Relatório</label>

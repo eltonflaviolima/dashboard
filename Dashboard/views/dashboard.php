@@ -1,6 +1,7 @@
 <?php
     //Conexão
     require_once('../conexao.php');
+    require_once('../plugins/converte.php');
 
     //Sessão
     session_start();
@@ -10,14 +11,13 @@
         header('Location: ../index.php');
     endif;
 
-    //Dados
+    //Dados de usuario
     $id = $_SESSION['id_usuario'];
     $sql = "SELECT * FROM usuario WHERE id = '$id'";
     $resultado = mysqli_query($conexao, $sql);
     $dados = mysqli_fetch_array($resultado);
 
-    //Dados Sensor
-    //TODO rever essas pesquisas
+    //Dados Sensor Gráfico
     date_default_timezone_set('America/Sao_Paulo');
     $listaSensor = array();
     $listaData = array();
@@ -33,36 +33,40 @@
         $i = $i + 1;
     }
 
-    if(isset($_POST['pesquisar'])):
-        $dataPesquisa = mysqli_escape_string($conexao, $_POST['data']);
-        $dataArray = explode("-", $dataPesquisa);
-        $dataPesquisa = $dataArray[0] . "-" . $dataArray[1];
-        $sqlSensor = "SELECT * FROM sensor WHERE data_hora LIKE '%" . $dataPesquisa . "%'";
-        $resultadoSensor = mysqli_query($conexao, $sqlSensor);
-
-    else: 
-        $sqlSensor = "SELECT * FROM sensor";
-        $resultadoSensor = mysqli_query($conexao, $sqlSensor);
+    //Dados Sensor Tabela
+    $sqlSensor = "SELECT * FROM sensor";
+    $resultadoSensor = mysqli_query($conexao, $sqlSensor);
+    
+    //Configurações de usuário
+    if(isset($_POST['corLinha'])):
+        $_SESSION['corLinha'] = $_POST['corLinha'];
     endif;
-
-    if(isset($_POST['intervalo'])):
-        $dataStart = mysqli_escape_string($conexao, $_POST['start']);
-        $dataArray = explode("-", $dataStart);
-        $dataStart = $dataArray[0] . "-" . $dataArray[1] . "-" . $dataArray[2];
-        $dataEnd = mysqli_escape_string($conexao, $_POST['end']);
-        $dataArray = explode("-", $dataEnd);
-        $dataEnd = $dataArray[0] . "-" . $dataArray[1] . "-" . $dataArray[2];
-        $sqlSensor = "SELECT * FROM sensor WHERE data_hora BETWEEN '%" . $dataStart . "%' AND '%" . $dataEnd . "%'";
-        $resultadoSensor = mysqli_query($conexao, $sqlSensor);
-
+    
+    if(isset($_POST['corFundo'])):
+        $_SESSION['corFundo'] = hex2rgba($_POST['corFundo'], 0.5);
+    endif;
+    
+    if(isset($_POST['lineWidht'])):
+        $_SESSION['lineWidht'] = $_POST['lineWidht'];
+    endif;
+    
+    if(isset($_POST['chartTitle'])):
+        $_SESSION['titulo'] = $_POST['chartTitle'];
+    endif;
+    
+    if(isset($_POST['table'])):
+        $_SESSION['tabela'] = true;
     else:
-        $sqlSensor = "SELECT * FROM sensor";
-        $resultadoSensor = mysqli_query($conexao, $sqlSensor);
+        $_SESSION['tabela'] = false;
     endif;
+    
+    if(isset($_POST['tipoGrafico'])):
+        $_SESSION['tipoGrafico'] = $_POST['tipoGrafico'];
+    endif;
+
 ?>
 
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,7 +110,7 @@
                     </li>
                     <li class="sidebar-logout">
                         <i class="fas fa-sign-out-alt"></i>
-                        <a href="../logout.php"></i>Logout </a>
+                        <a href="../logout.php"></i>LOGOUT </a>
                     </li>
                 </ul>
             </div>
@@ -120,33 +124,13 @@
             </header>
             <div class="main-content bg-dashboard">
                 <div class="panel-row">
+                    <h1><?php echo $_SESSION['titulo'] ?></h1>
+                    <canvas id="myChart" style="widht: 600px;"></canvas>
+                </div>
+                <div class="panel-row">
                     <div class="panel panel-50" id="grafico">
-                       <!-- <canvas class="line=chart" id="myChart"></canvas> 
-                       <form action="" method="post">
-                            <div class="form-group">
-                                <label for="data">Filtrar registros por mês</label>
-                                <input type="month" class="form-control" name="data">
-                                <button type="submit" name="pesquisar" class="btn btn-primary">Buscar</button>
-                            </div>
-                       </form>
-                       <form action="" method="post">
-
-                            <div class="row">
-                                <div class="col-6">
-                                    <label for="start">Desde</label>
-                                    <input type="date" name="start" class="form-control" id="start">
-                                </div>
-                                <div class="col-6">
-                                    <label for="end">Até</label>
-                                    <input type="date" name="end" class="form-control" id="end">
-                                </div>
-                            </div>
-                            
-                            <button type="submit" name="intervalo" class="btn btn-primary">Buscar</button>
-                       </form>
-                       -->
-                        <h1>Registros de Pressão</h1>
-                        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+                    <?php
+                    if($_SESSION['tabela']): echo '
                        <table class="table table-hover">
                         <thead>
                             <tr>
@@ -155,9 +139,8 @@
                             <th scope="col">Data e Hora</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php
-            
+                        <tbody>';
+                            
                             while($dadosSensor = mysqli_fetch_array($resultadoSensor)):
                                 echo '<tr><th scope="row">';
                                 echo $dadosSensor['id'];
@@ -167,9 +150,10 @@
                                 echo $dadosSensor['data_hora'];
                                 echo '</td></tr>';
                             endwhile;
-                            ?>
+                        echo '
                             </tbody>
                         </table>
+                        '; endif; ?>
                 </div>
             </div>
         </main>
@@ -189,34 +173,64 @@
     <!--Import custom chart.js-->
     <script src="../js/charts.js"></script>
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+      var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // Tipo de gráfico
+            type: '<?php echo $_SESSION['tipoGrafico'] ?>',
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['hora', 'Pressão'],
-          <?php
-            $k = $i;
-            for($i = (count($listaSensor) - 7); $i < count($listaSensor); $i++){
-            ?>
-          ['<?php echo $listaData[$i] ?>h',  <?php echo $listaSensor[$i] ?>],
-            <?php } ?>
-        ]);
+            // Dados do gráfico
+            data: {
+                labels: [
+                    <?php
+                    $k = $i;
+                    for($i = (count($listaSensor) - 7); $i < count($listaSensor); $i++){
+                    ?>'<?php echo $listaData[$i] ?>h',<?php } ?>
+                ],
+                datasets: [{
+                    label: false,
+                    backgroundColor: '<?php echo $_SESSION['corFundo'] ?>',
+                    borderWidth: <?php echo $_SESSION['lineWidht'] ?>,
+                    borderColor: '<?php echo $_SESSION['corLinha'] ?>',
+                    data: [
+                        <?php
+                        $k = $i;
+                        for($i = (count($listaSensor) - 7); $i < count($listaSensor); $i++){
+                        ?><?php echo $listaSensor[$i] ?>,<?php } ?>
+                    ]
+                }]
+            },
 
-        var options = {
-          title: '',
-          hAxis: {title: 'Tempo',  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0},
-          backgroundColor: { fill:'transparent' }
-        };
-
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
+            // Configurações do gráfico
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            drawOnChartArea: true
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            max: 90,
+                            min: 0,
+                            stepSize: 15
+                        },
+                        gridLines: {
+                            drawOnChartArea: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    callbacks: {
+                    label: (item) => `${item.yLabel} kPa`,
+                    },
+                },
+            }  
+        });
     </script>
-
 </body>
 
 </html>

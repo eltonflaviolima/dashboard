@@ -61,48 +61,52 @@
                     </li>
                     <li class="sidebar-logout">
                         <i class="fas fa-sign-out-alt"></i>
-                        <a href="../logout.php"></i>Logout </a>
+                        <a href="../logout.php"></i>LOGOUT </a>
                     </li>
                 </ul>
             </div>
         </sidebar>
         <main>
             <header>
-                <a href="dashboard.php"><i class="fas fa-chart-line"></i> Dashboard</a>
+                <!-- Criar função para esconder sidebar -->
+                <i id="iconMenu" onclick="responsiveSidebar()" class="fas fa-bars"></i>
                 <a> Bem vindo <?php echo $dados['nome']; ?>!</a>
                 <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </header>
             <div class="main-content bg-config">
                 <div class="panel-row">
                     <div class="panel panel-config">
+                    <form action="dashboard.php" method="POST">
                         <div class="form-group">
                             <label for="chartTitle">Título do Gráfico</label>
-                            <input type="text" class="form-control" id="chartTitle" placeholder="Ex: 'Pressão Café'">
+                            <input type="text" name="chartTitle" class="form-control" id="chartTitle" placeholder="Ex: 'Pressão Café'">
                         </div>
                         <div class="form-group">
                             <label for="type">Tipo de Gráfico</label>
-                            <select class="custom-select custom-select-sm">
-                                <option selected>Tipo de Gráfico</option>
-                                <option value="1">Linha</option>
-                                <option value="2">Barra</option>
+                            <select name="tipoGrafico" class="custom-select custom-select-sm">
+                                <option selected value="line">Linha</option>
+                                <option value="bar">Barra</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="lineWidht">Largura da Linha</label>
-                            <input type="range" class="custom-range" min="0" max="5" id="lineWidht">
+                            <input type="range" name="lineWidht" class="custom-range" min="0" max="7" id="lineWidht">
                         </div>
                         <div class="form-group">
                             <label for="corLinha">Cor do Gráfico</label>
-                            <input type="color" class="form-control mx-auto" id="corLinha">
+                            <input type="color" name="corLinha" class="form-control mx-auto" value="#C65E37" id="corLinha">
                         </div>
                         <div class="form-group">
                             <label for="corFundo">Cor de Fundo</label>
-                            <input type="color" class="form-control mx-auto" id="corFundo">
+                            <input type="color" name="corFundo" class="form-control mx-auto" value="#C65E37" id="corFundo">
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="grid">
-                            <label class="custom-control-label" for="grid">Grid habilitado</label>
+                            <input type="checkbox" name="table" class="custom-control-input" id="tabela">
+                            <label class="custom-control-label" for="tabela">Exibir Tabela</label>
                         </div>
+
+                        <button type="submit" class="btn"><i class="fas fa-paint-brush"></i>   Salvar configurações</button>
+                    </form>
                     </div>
                 </div>
             </div>

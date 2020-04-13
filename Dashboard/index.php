@@ -25,6 +25,13 @@
                     $dados = mysqli_fetch_array($resultado);
                     $_SESSION['logado'] = true;
                     $_SESSION['id_usuario'] = $dados['id'];
+                    //Configurações padrão
+                    $_SESSION['titulo'] = 'Registro de Pressão';
+                    $_SESSION['corLinha'] = '#C65E37';
+                    $_SESSION['corFundo'] = 'rgba(198, 93, 55, 0.507)';
+                    $_SESSION['lineWidht'] = 3;
+                    $_SESSION['tabela'] = false;
+                    $_SESSION['tipoGrafico'] = 'line';
                     header('Location: views/dashboard.php');
                 else:
                     $errosSenha[] = "<p>Os dados não conferem!</p>";
