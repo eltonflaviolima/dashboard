@@ -16,7 +16,12 @@
     justify-content: center;
 }
 
-.flex-dashboard header a > svg {
+.flex-dashboard header svg {
     font-size: 20px;
     color: #C65E37;
+}
+
+.flex-dashboard .fa-bars {
+    font-size: 22px;
+    cursor: pointer;
 }

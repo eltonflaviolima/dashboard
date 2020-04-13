@@ -53,7 +53,7 @@ main .main-content panel {
 }
 
 .panel-config {
-    width: 50%;
+    width: 100%;
     margin-bottom: 20px;
     padding: 30px;
     border-radius: 2%;
@@ -89,5 +89,18 @@ main .main-content panel {
     border: none;
     color: #fff;
     margin-top: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        display: block;
+        height: 100%;
+        width: 100%;
+        background-image: url(../images/cafe-torrado.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+        z-index: 1;
+    }
 }
 

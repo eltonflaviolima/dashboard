@@ -87,7 +87,7 @@
     <div class="flex-dashboard">
         <sidebar id="sidebar">
             <div class="sidebar-title">
-                <img src="../images/logo-tech-tensiometro.png" alt="">
+                <img src="../images/logo-tech-tensiometro.png" alt="" id="iconMenu" onclick="responsiveSidebar()">
                 <h2>Tensiômetro</h2>
             </div>
             <div class="menu">
@@ -119,8 +119,8 @@
             <header>
                 <!-- Criar função para esconder sidebar -->
                 <i id="iconMenu" onclick="responsiveSidebar()" class="fas fa-bars"></i>
-                <a> Bem vindo <?php echo $dados['nome']; ?>!</a>
-                <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <!--<a> Bem vindo <?php echo $dados['nome']; ?>!</a>
+                <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>-->
             </header>
             <div class="main-content bg-dashboard">
                 <div class="panel-row">
@@ -171,7 +171,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!--Import custom chart.js-->
-    <script src="../js/charts.js"></script>
+    <script src="../js/menu.js"></script>
 
     <script type="text/javascript">
       var ctx = document.getElementById('myChart').getContext('2d');

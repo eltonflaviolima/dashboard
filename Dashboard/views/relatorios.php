@@ -40,9 +40,9 @@
 
 <body>
     <div class="flex-dashboard">
-        <sidebar>
+        <sidebar id="sidebar">
             <div class="sidebar-title">
-                <img src="../images/logo-tech-tensiometro.png" alt="">
+                <img src="../images/logo-tech-tensiometro.png" alt="" id="iconMenu" onclick="responsiveSidebar()">
                 <h2>Tensiômetro</h2>
             </div>
             <div class="menu">
@@ -66,16 +66,16 @@
                 </ul>
             </div>
         </sidebar>
-        <main>
+        <main id="mainContent">
             <header>
                 <!-- Criar função para esconder sidebar -->
                 <i id="iconMenu" onclick="responsiveSidebar()" class="fas fa-bars"></i>
-                <a> Bem vindo <?php echo $dados['nome']; ?>!</a>
-                <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <!--<a> Bem vindo <?php echo $dados['nome']; ?>!</a>
+                <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>-->
             </header>
             <div class="main-content bg-report">
                 <div class="panel-row">
-                    <div class="panel panel-50">
+                    <div class="panel panel-config">
                     <div class="form-group">
                                 <label for="type">Formato de Arquivo</label>
                                 <select class="custom-select custom-select-sm">
@@ -130,8 +130,7 @@
 
     <script src="../plugins/Chart.js-2.9.3/dist/Chart.min.js"></script>
 
-    <script src="../js/charts.js"></script>
-
+    <script src="../js/menu.js"></script>
 </body>
 
 </html>

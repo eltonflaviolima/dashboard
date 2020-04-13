@@ -61,3 +61,13 @@ div.menu ul li > a {
     text-decoration: none;
     color: whitesmoke;
 }
+
+sidebar {
+    display: block;
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    color: #fff;
+    background-color: #1D2123;
+    z-index: 2;
+}
