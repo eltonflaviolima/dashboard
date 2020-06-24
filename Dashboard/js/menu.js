@@ -7,8 +7,6 @@ let w = window.innerWidth;
 window.addEventListener("resize", ()=> {
     w = window.innerWidth;
 })
-sidebar.style.display = 'none';
-main.style.width = '100%';
 function responsiveSidebar () {
     if(w <= 768){
         if(sidebar.style.display == 'none') {

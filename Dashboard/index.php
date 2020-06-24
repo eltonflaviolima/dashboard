@@ -32,6 +32,7 @@
                     $_SESSION['lineWidht'] = 3;
                     $_SESSION['tabela'] = false;
                     $_SESSION['tipoGrafico'] = 'line';
+                    $_SESSION['limitePressao'] = 4;
                     header('Location: views/dashboard.php');
                 else:
                     $errosSenha[] = "<p>Os dados não conferem!</p>";

@@ -78,6 +78,10 @@
                     <div class="panel panel-config">
                     <form action="dashboard.php" method="POST">
                         <div class="form-group">
+                            <label for="limite">Limite de Pressão</label>
+                            <input type="number" name="limitePressao" class="form-control" id="limite" placeholder="Limite da pressão para ativar a irrigação">
+                        </div>
+                        <div class="form-group">
                             <label for="chartTitle">Título do Gráfico</label>
                             <input type="text" name="chartTitle" class="form-control" id="chartTitle" placeholder="Ex: 'Pressão Café'">
                         </div>
@@ -104,6 +108,7 @@
                             <input type="checkbox" name="table" class="custom-control-input" id="tabela">
                             <label class="custom-control-label" for="tabela">Exibir Tabela</label>
                         </div>
+
 
                         <button type="submit" class="btn"><i class="fas fa-paint-brush"></i>   Salvar configurações</button>
                     </form>

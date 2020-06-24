@@ -5,4 +5,5 @@
 @import 'sidebar.css';
 @import 'header.css';
 @import 'main.css';
+@import 'simple-sidebar.css';
 @import url("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css")
