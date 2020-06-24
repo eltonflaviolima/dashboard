@@ -1,0 +1,99 @@
+.register-parent {
+    height: 100%;
+    padding: 0 2%;
+    background-image: url(../images/cadastro.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 750px;
+}
+
+.register {
+    margin-top: 50px;
+    width: 100%;
+    max-width: 600px;
+    padding: 0px 30px 30px 30px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(147, 147, 147, 1);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(147, 147, 147, 1);
+    box-shadow: 0px 0px 5px 0px rgba(147, 147, 147, 1);
+    border-radius: 3%;
+    z-index: 1;
+}   	
+
+.register-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.register-title img {
+    width: 150px;
+    height: 150px;
+}
+
+.register button {
+    width: 100%;
+    background: linear-gradient(154deg, rgba(201,49,56,1) 34%, rgba(113,32,11,1) 82%);
+    border: none;
+    color: #fff;
+    margin-top: 40px;
+    display: block;
+}
+
+.register button:hover {
+    border: none;
+    color: #fff;
+    transform: scale(1.05);
+    transition: .2s;
+    background: linear-gradient(135deg, rgba(201,49,56,1) 34%, rgba(113,32,11,1) 82%);
+}
+
+.register p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+label {
+    color: #000;
+}
+
+@media screen and (max-width: 570px) {
+    .register-title h2 {
+        display: none;
+    }
+
+    .register-title {
+        justify-content: center;
+    }
+}
+
+body::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);;
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background: linear-gradient(85deg, rgba(201,49,56,1) 34%, rgba(113,32,11,1) 82%);
+}
