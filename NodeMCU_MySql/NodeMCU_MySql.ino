@@ -8,7 +8,7 @@
 const char* ssid     = STASSID;
 const char* password = STAPSK;
 
-const char* host = "192.168.0.129";
+const char* host = "192.168.0.139"; //IP do servidor
 
 const int amostras = 10000;
 const float fator_atm = 0.0098692327;
